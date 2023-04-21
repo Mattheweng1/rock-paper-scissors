@@ -9,7 +9,7 @@
 
 // Create a function called "playRound()" that takes two parameters - the "playerSelection" and the "computerSelection". "playerSelection" value should come from a prompt() to get input from the user. "computerSelection" value should come from "getComputerChoice()". Based on the parameters, return a string that declares the winner of the round like so: "You lose! Paper beats Rock!". (NOTE: "playerSelection" parameter should be case-insensitive so that it doesn't matter how the user capitalizes their answer. Can use the ".toLowerCase()" string method on "playerSelection" before comparing to "computerSelection".)
 
-// Create a function called "game()" and loop through "playRound()" 5 times while keeping score. After completing 5 rounds, announce the score and winner.
+// Create a function called "playFiveRounds()" and loop through "playRound()" 5 times while keeping score. After completing 5 rounds, announce the score and winner.
 
 
 // CODE
@@ -49,6 +49,8 @@ function playRound() {
 
     computerSelection = getComputerChoice();
     console.log("Computer: " + computerSelection);
+
+    // This while loop prompts the user to enter another choice until the game is no longer a tie.
 
     while (playerSelection === computerSelection) {
         console.log("It's a tie! Try again!");
@@ -92,9 +94,9 @@ function playRound() {
 
 };
 
-// Create a function called "game()" and loop through "playRound()" 5 times while keeping score. After completing 5 rounds, announce the score and winner.
+// Create a function called "playFiveRounds()" and loop through "playRound()" 5 times while keeping score. After completing 5 rounds, announce the score and winner.
 
-function game() {
+function playFiveRounds() {
     playerScore = 0;
     computerScore = 0;
 
@@ -108,4 +110,4 @@ function game() {
         return `You lost ${computerScore} times out of 5. You're actually so bad at this game.`;
     };
 };
-console.log(game());
+console.log(playFiveRounds());
