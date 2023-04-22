@@ -39,28 +39,27 @@ function onlyCapFirst(str) {
     return str;
 }
 
-let playerScore = 0;
-let computerScore = 0;
-
-function playRound() {
-    playerSelection = prompt("Rock, Paper, or Scissors? Which will you choose?");
+function getSelections(promptText = "Rock, Paper, or Scissors? Which will you choose?") {
+    playerSelection = prompt(promptText);
     playerSelection = onlyCapFirst(playerSelection);
     console.log("Player: " + playerSelection);
 
     computerSelection = getComputerChoice();
     console.log("Computer: " + computerSelection);
+}
+
+let playerScore = 0;
+let computerScore = 0;
+
+function playRound() {
+    getSelections();
 
     // This while loop prompts the user to enter another choice until the game is no longer a tie.
 
     while (playerSelection === computerSelection) {
         console.log("It's a tie! Try again!");
 
-        playerSelection = prompt(`You both chose ${playerSelection}. It's a tie! Try again!`);
-        playerSelection = onlyCapFirst(playerSelection);
-        console.log("Player: " + playerSelection);
-
-        computerSelection = getComputerChoice();
-        console.log("Computer: " + computerSelection);
+        getSelections(`You both chose ${playerSelection}. It's a tie! Try again!`);
     }
 
     if (playerSelection === "Rock" && computerSelection === "Paper") {
