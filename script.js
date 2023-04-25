@@ -33,15 +33,14 @@ function getComputerChoice() {
 
 // Create a function called "playRound()" that takes two parameters - the "playerSelection" and the "computerSelection". "playerSelection" value should come from a prompt() to get input from the user. "computerSelection" value should come from "getComputerChoice()". Based on the parameters, return a string that declares the winner of the round like so: "You lose! Paper beats Rock!". (NOTE: "playerSelection" parameter should be case-insensitive so that it doesn't matter how the user capitalizes their answer. Can use the ".toLowerCase()" string method on "playerSelection" before comparing to "computerSelection".)
 
-function onlyCapFirst(str) {
+/*function onlyCapFirst(str) {
     str = str.toLowerCase();
     str = str.replace(str.charAt(0), str.charAt(0).toUpperCase());
     return str;
-}
+}*/
 
-function getSelections(promptText = "Rock, Paper, or Scissors? Which will you choose?") {
-    playerSelection = prompt(promptText);
-    playerSelection = onlyCapFirst(playerSelection);
+function getSelections(choice) {
+    playerSelection = choice;
     console.log("Player: " + playerSelection);
 
     computerSelection = getComputerChoice();
@@ -51,51 +50,59 @@ function getSelections(promptText = "Rock, Paper, or Scissors? Which will you ch
 let playerScore = 0;
 let computerScore = 0;
 
-function playRound() {
-    getSelections();
+const msg = document.getElementById('msg')
 
-    // This while loop prompts the user to enter another choice until the game is no longer a tie.
-
-    while (playerSelection === computerSelection) {
-        console.log("It's a tie! Try again!");
-
-        getSelections(`You both chose ${playerSelection}. It's a tie! Try again!`);
+function playRound(choice) {
+    if (playerScore === 5 || computerScore === 5) {
+        playerScore = 0;
+        computerScore = 0;
     }
 
-    if (playerSelection === "Rock" && computerSelection === "Paper") {
+    getSelections(choice);
+
+    if (playerSelection === computerSelection) {
+        msg.textContent = "It's a tie! Try again!";
+    } else if(playerSelection === "Rock" && computerSelection === "Paper") {
         computerScore++;
-        return `Your opponent's ${computerSelection} beat your ${playerSelection}! You lost!`;
+        msg.textContent = `Your opponent's ${computerSelection} beat your ${playerSelection}! You lost!`;
 
     } else if (playerSelection === "Paper" && computerSelection === "Scissors") {
         computerScore++;
-        return `Your opponent's ${computerSelection} beat your ${playerSelection}! You lost!`;
+        msg.textContent = `Your opponent's ${computerSelection} beat your ${playerSelection}! You lost!`;
 
     } else if (playerSelection === "Scissors" && computerSelection === "Rock") {
         computerScore++;
-        return `Your opponent's ${computerSelection} beat your ${playerSelection}! You lost!`;
+        msg.textContent = `Your opponent's ${computerSelection} beat your ${playerSelection}! You lost!`;
 
     } else if (playerSelection === "Paper" && computerSelection === "Rock") {
         playerScore++;
-        return `Your ${playerSelection} beat your opponent's ${computerSelection}! You won!`;
+        msg.textContent = `Your ${playerSelection} beat your opponent's ${computerSelection}! You won!`;
 
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
         playerScore++;
-        return `Your ${playerSelection} beat your opponent's ${computerSelection}! You won!`;
+        msg.textContent = `Your ${playerSelection} beat your opponent's ${computerSelection}! You won!`;
 
     } else if (playerSelection === "Scissors" && computerSelection === "Paper") {
         playerScore++;
-        return `Your ${playerSelection} beat your opponent's ${computerSelection}! You won!`;
+        msg.textContent = `Your ${playerSelection} beat your opponent's ${computerSelection}! You won!`;
 
     } else {
-        console.log("What the heck did you type? Please just type 'Rock', 'Paper', or 'Scissors'.");
-        return playRound();
+        msg.textContent = "What the heck did you type? Please just type 'Rock', 'Paper', or 'Scissors'."
     };
 
+    if (playerScore === 5) {
+        msg.textContent = `You won! Woohoooo!`;
+    } else if (computerScore === 5) {
+        msg.textContent = `You lost. You're a loser. Give up.`;
+    }
+
+    document.getElementById('playerScore').textContent = `Player: ${playerScore}`;
+    document.getElementById('computerScore').textContent = `Computer: ${computerScore}`;
 };
 
 // Create a function called "playFiveRounds()" and loop through "playRound()" 5 times while keeping score. After completing 5 rounds, announce the score and winner.
 
-function playFiveRounds() {
+/*function playFiveRounds() {
     playerScore = 0;
     computerScore = 0;
 
@@ -109,4 +116,10 @@ function playFiveRounds() {
         return `You lost ${computerScore} times out of 5. You're actually so bad at this game.`;
     };
 };
-console.log(playFiveRounds());
+console.log(playFiveRounds());*/
+
+//Add event listeners to buttons that will call playRound() with correct playerSelection every time button is clicked.
+
+document.getElementById('chooseRock').addEventListener('click', () => playRound("Rock"));
+document.getElementById('choosePaper').addEventListener('click', () => playRound("Paper"));
+document.getElementById('chooseScissors').addEventListener('click', () => playRound("Scissors"));
